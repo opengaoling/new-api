@@ -9,6 +9,7 @@ import (
 	"github.com/QuantumNous/new-api/common"
 	"github.com/QuantumNous/new-api/i18n"
 	"github.com/QuantumNous/new-api/model"
+	"github.com/QuantumNous/new-api/service/authz"
 	"github.com/QuantumNous/new-api/setting"
 	"github.com/QuantumNous/new-api/setting/console_setting"
 	"github.com/QuantumNous/new-api/setting/operation_setting"
@@ -215,6 +216,21 @@ func UpdateOption(c *gin.Context) {
 			})
 			return
 		}
+	case authz.AdminRolePermissionsOptionKey:
+		normalized, err := authz.AdminRolePermissionsFromJSONString(option.Value.(string))
+		if err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"success": false,
+				"message": "普通管理员权限配置格式无效: " + err.Error(),
+			})
+			return
+		}
+		serialized, err := authz.AdminRolePermissionsToJSONString(normalized)
+		if err != nil {
+			common.ApiError(c, err)
+			return
+		}
+		option.Value = serialized
 	case "theme.frontend":
 		if option.Value != "default" && option.Value != "classic" {
 			c.JSON(http.StatusOK, gin.H{
@@ -336,6 +352,12 @@ func UpdateOption(c *gin.Context) {
 	if err != nil {
 		common.ApiError(c, err)
 		return
+	}
+	if option.Key == authz.AdminRolePermissionsOptionKey {
+		if err = authz.ApplyAdminRolePermissionsJSON(option.Value.(string)); err != nil {
+			common.ApiError(c, err)
+			return
+		}
 	}
 	// 出于安全考虑只记录被修改的配置项名称，不记录配置值（可能含密钥等敏感信息）。
 	recordManageAudit(c, "option.update", map[string]interface{}{

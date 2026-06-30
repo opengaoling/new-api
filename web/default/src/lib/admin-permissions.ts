@@ -11,6 +11,7 @@ export const ADMIN_PERMISSION_RESOURCES = {
 export const ADMIN_PERMISSION_ACTIONS = {
   READ: 'read',
   OPERATE: 'operate',
+  STATUS: 'status',
   WRITE: 'write',
   SENSITIVE_WRITE: 'sensitive_write',
   SECRET_VIEW: 'secret_view',

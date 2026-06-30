@@ -17,6 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 import { SystemBehaviorSection } from '../general/system-behavior-section'
+import { AdminPermissionsSection } from './admin-permissions-section'
 import { EmailSettingsSection } from '../integrations/email-settings-section'
 import { MonitoringSettingsSection } from '../integrations/monitoring-settings-section'
 import { WorkerSettingsSection } from '../integrations/worker-settings-section'
@@ -56,6 +57,15 @@ const OPERATIONS_SECTIONS = [
           'perf_metrics_setting.retention_days':
             settings['perf_metrics_setting.retention_days'] ?? 0,
         }}
+      />
+    ),
+  },
+  {
+    id: 'admin-permissions',
+    titleKey: 'Administrator permissions',
+    build: (settings: OperationsSettings) => (
+      <AdminPermissionsSection
+        initialSerialized={settings['authz.admin_role_permissions']}
       />
     ),
   },

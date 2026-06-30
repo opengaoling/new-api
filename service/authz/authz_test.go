@@ -48,6 +48,7 @@ func TestInitSeedsBuiltInRolesAndPoliciesOnce(t *testing.T) {
 	assert.True(t, Can(1, common.RoleRootUser, ChannelSensitiveWrite))
 	assert.True(t, Can(2, common.RoleAdminUser, ChannelRead))
 	assert.True(t, Can(2, common.RoleAdminUser, ChannelOperate))
+	assert.False(t, Can(2, common.RoleAdminUser, ChannelStatus))
 	assert.True(t, Can(2, common.RoleAdminUser, ChannelWrite))
 	assert.False(t, Can(2, common.RoleAdminUser, ChannelSensitiveWrite))
 	assert.False(t, Can(3, common.RoleCommonUser, ChannelRead))
@@ -101,6 +102,7 @@ func TestSetUserPermissionsStoresOnlyOverrides(t *testing.T) {
 		ResourceChannel: {
 			ActionRead:           true,
 			ActionOperate:        true,
+			ActionStatus:         false,
 			ActionWrite:          false,
 			ActionSensitiveWrite: true,
 			ActionSecretView:     false,
@@ -129,6 +131,7 @@ func TestSetUserPermissionsStoresOnlyOverrides(t *testing.T) {
 		ResourceChannel: {
 			ActionRead:           true,
 			ActionOperate:        true,
+			ActionStatus:         false,
 			ActionWrite:          true,
 			ActionSensitiveWrite: false,
 			ActionSecretView:     false,
@@ -223,6 +226,7 @@ func TestCapabilitiesUseCatalogShape(t *testing.T) {
 
 	assert.True(t, capabilities[ResourceChannel][ActionRead])
 	assert.True(t, capabilities[ResourceChannel][ActionOperate])
+	assert.False(t, capabilities[ResourceChannel][ActionStatus])
 	assert.True(t, capabilities[ResourceChannel][ActionWrite])
 	assert.False(t, capabilities[ResourceChannel][ActionSensitiveWrite])
 	assert.False(t, capabilities[ResourceChannel][ActionSecretView])

@@ -22,6 +22,7 @@ import { Card, Spin } from '@douyinfe/semi-ui';
 import SettingsGeneral from '../../pages/Setting/Operation/SettingsGeneral';
 import SettingsHeaderNavModules from '../../pages/Setting/Operation/SettingsHeaderNavModules';
 import SettingsSidebarModulesAdmin from '../../pages/Setting/Operation/SettingsSidebarModulesAdmin';
+import SettingsAdminPermissions from '../../pages/Setting/Operation/SettingsAdminPermissions';
 import SettingsSensitiveWords from '../../pages/Setting/Operation/SettingsSensitiveWords';
 import SettingsLog from '../../pages/Setting/Operation/SettingsLog';
 import SettingsMonitoring from '../../pages/Setting/Operation/SettingsMonitoring';
@@ -55,6 +56,10 @@ const OperationSetting = () => {
 
     /* 左侧边栏模块管理（管理员） */
     SidebarModulesAdmin: '',
+
+    /* 普通管理员权限管理 */
+    'authz.admin_role_permissions':
+      '{"channel":{"read":true,"operate":true,"status":false,"write":true,"sensitive_write":false,"secret_view":false}}',
 
     /* 敏感词设置 */
     CheckSensitiveEnabled: false,
@@ -133,6 +138,10 @@ const OperationSetting = () => {
         {/* 左侧边栏模块管理（管理员） */}
         <div style={{ marginTop: '10px' }}>
           <SettingsSidebarModulesAdmin options={inputs} refresh={onRefresh} />
+        </div>
+        {/* 普通管理员权限管理 */}
+        <div style={{ marginTop: '10px' }}>
+          <SettingsAdminPermissions options={inputs} refresh={onRefresh} />
         </div>
         {/* 屏蔽词过滤设置 */}
         <Card style={{ marginTop: '10px' }}>

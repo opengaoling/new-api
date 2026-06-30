@@ -333,6 +333,7 @@ export type OperationsSettings = {
   DefaultCollapseSidebar: boolean
   DemoSiteEnabled: boolean
   SelfUseModeEnabled: boolean
+  'authz.admin_role_permissions': string
   QuotaRemindThreshold: string
   SMTPServer: string
   SMTPPort: string

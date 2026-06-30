@@ -288,15 +288,16 @@ func InitResources() error {
 		common.FatalLog("failed to initialize database: " + err.Error())
 		return err
 	}
+	model.CheckSetup()
+
+	// Initialize options, should after model.InitDB() and before authorization so
+	// authz can seed role defaults from persisted system settings.
+	model.InitOptionMap()
+
 	if err = authz.Init(model.DB); err != nil {
 		common.FatalLog("failed to initialize authorization: " + err.Error())
 		return err
 	}
-
-	model.CheckSetup()
-
-	// Initialize options, should after model.InitDB()
-	model.InitOptionMap()
 
 	// 清理旧的磁盘缓存文件
 	common.CleanupOldCacheFiles()

@@ -52,6 +52,12 @@ func seedDefaultPolicies() error {
 		if spec.Superuser {
 			continue
 		}
+		if spec.Key == BuiltInRoleAdmin {
+			if err := ApplyAdminRolePermissions(EffectiveAdminRolePermissions()); err != nil {
+				return err
+			}
+			continue
+		}
 		for _, permission := range PermissionsForRole(spec.Key) {
 			if _, err := e.AddPolicy(RoleSubject(spec.Key), permission.Resource, permission.Action, EffectAllow); err != nil {
 				return err

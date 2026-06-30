@@ -29,6 +29,8 @@ const defaultOperationsSettings: OperationsSettings = {
   DefaultCollapseSidebar: false,
   DemoSiteEnabled: false,
   SelfUseModeEnabled: false,
+  'authz.admin_role_permissions':
+    '{"channel":{"read":true,"operate":true,"status":false,"write":true,"sensitive_write":false,"secret_view":false}}',
   QuotaRemindThreshold: '',
   SMTPServer: '',
   SMTPPort: '',

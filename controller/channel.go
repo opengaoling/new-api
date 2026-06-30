@@ -930,6 +930,13 @@ func UpdateChannel(c *gin.Context) {
 	}
 	if _, ok := requestData["status"]; ok {
 		if isStatusOnlyChannelUpdate(requestData) && channel.Id > 0 && isManageableChannelStatus(channel.Status) {
+			if !authz.Can(c.GetInt("id"), c.GetInt("role"), authz.ChannelStatus) {
+				c.JSON(http.StatusForbidden, gin.H{
+					"success": false,
+					"message": common.TranslateMessage(c, i18n.MsgAuthInsufficientPrivilege),
+				})
+				return
+			}
 			changed := model.UpdateChannelStatus(channel.Id, "", channel.Status, "manual operation")
 			if changed {
 				model.InitChannelCache()

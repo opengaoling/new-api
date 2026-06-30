@@ -5,6 +5,7 @@ const (
 
 	ActionRead           = "read"
 	ActionOperate        = "operate"
+	ActionStatus         = "status"
 	ActionWrite          = "write"
 	ActionSensitiveWrite = "sensitive_write"
 	ActionSecretView     = "secret_view"
@@ -13,6 +14,7 @@ const (
 var (
 	ChannelRead           = Permission{Resource: ResourceChannel, Action: ActionRead}
 	ChannelOperate        = Permission{Resource: ResourceChannel, Action: ActionOperate}
+	ChannelStatus         = Permission{Resource: ResourceChannel, Action: ActionStatus}
 	ChannelWrite          = Permission{Resource: ResourceChannel, Action: ActionWrite}
 	ChannelSensitiveWrite = Permission{Resource: ResourceChannel, Action: ActionSensitiveWrite}
 	ChannelSecretView     = Permission{Resource: ResourceChannel, Action: ActionSecretView}
@@ -32,8 +34,13 @@ func init() {
 			{
 				Action:         ActionOperate,
 				LabelKey:       "Operate channels",
-				DescriptionKey: "Test channels, refresh balances, and enable/disable individual, batch, or tagged channels.",
+				DescriptionKey: "Test channels, refresh balances, and perform non-status operational actions.",
 				DefaultRoles:   []string{BuiltInRoleAdmin},
+			},
+			{
+				Action:         ActionStatus,
+				LabelKey:       "Enable or disable channels",
+				DescriptionKey: "Enable or disable individual, batch, or tagged channels.",
 			},
 			{
 				Action:         ActionWrite,
