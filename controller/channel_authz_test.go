@@ -53,12 +53,32 @@ func TestChannelHasSensitiveChanges(t *testing.T) {
 		assert.True(t, channelHasSensitiveChanges(&updated, origin, map[string]any{"base_url": newBaseURL}))
 	})
 
-	t.Run("header override change", func(t *testing.T) {
+	t.Run("header override change is non-sensitive", func(t *testing.T) {
 		updated := PatchChannel{Channel: *origin}
 		newHeaderOverride := `{"X-Key":"{api_key}"}`
 		updated.HeaderOverride = &newHeaderOverride
 
-		assert.True(t, channelHasSensitiveChanges(&updated, origin, map[string]any{"header_override": newHeaderOverride}))
+		assert.False(t, channelHasSensitiveChanges(&updated, origin, map[string]any{"header_override": newHeaderOverride}))
+	})
+
+	t.Run("setting proxy change", func(t *testing.T) {
+		originSetting := `{"proxy":"http://127.0.0.1:7890","force_format":false}`
+		updatedSetting := `{"proxy":"http://127.0.0.1:7891","force_format":false}`
+		origin := &model.Channel{Setting: &originSetting}
+		updated := PatchChannel{Channel: *origin}
+		updated.Setting = &updatedSetting
+
+		assert.True(t, channelHasSensitiveChanges(&updated, origin, map[string]any{"setting": updatedSetting}))
+	})
+
+	t.Run("setting non-proxy change", func(t *testing.T) {
+		originSetting := `{"proxy":"http://127.0.0.1:7890","force_format":false}`
+		updatedSetting := `{"proxy":"http://127.0.0.1:7890","force_format":true}`
+		origin := &model.Channel{Setting: &originSetting}
+		updated := PatchChannel{Channel: *origin}
+		updated.Setting = &updatedSetting
+
+		assert.False(t, channelHasSensitiveChanges(&updated, origin, map[string]any{"setting": updatedSetting}))
 	})
 
 	t.Run("omitted sensitive fields do not use zero values", func(t *testing.T) {
@@ -129,14 +149,21 @@ func TestClearChannelReadOnlyFields(t *testing.T) {
 	assert.Equal(t, "default", channel.Group)
 }
 
-func TestUpdateChannelRejectsStatusField(t *testing.T) {
+func TestIsStatusOnlyChannelUpdate(t *testing.T) {
+	assert.True(t, isStatusOnlyChannelUpdate(map[string]any{"id": float64(1), "status": float64(2)}))
+	assert.False(t, isStatusOnlyChannelUpdate(map[string]any{"id": float64(1)}))
+	assert.False(t, isStatusOnlyChannelUpdate(map[string]any{"status": float64(2)}))
+	assert.False(t, isStatusOnlyChannelUpdate(map[string]any{"id": float64(1), "status": float64(2), "name": "x"}))
+}
+
+func TestUpdateChannelRejectsMixedStatusField(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	recorder := httptest.NewRecorder()
 	ctx, _ := gin.CreateTestContext(recorder)
 	ctx.Request = httptest.NewRequest(
 		http.MethodPut,
 		"/api/channel/",
-		bytes.NewBufferString(`{"id":1,"status":2}`),
+		bytes.NewBufferString(`{"id":1,"status":2,"name":"x"}`),
 	)
 	ctx.Request.Header.Set("Content-Type", "application/json")
 

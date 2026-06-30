@@ -929,6 +929,24 @@ func UpdateChannel(c *gin.Context) {
 		return
 	}
 	if _, ok := requestData["status"]; ok {
+		if isStatusOnlyChannelUpdate(requestData) && channel.Id > 0 && isManageableChannelStatus(channel.Status) {
+			changed := model.UpdateChannelStatus(channel.Id, "", channel.Status, "manual operation")
+			if changed {
+				model.InitChannelCache()
+				service.ResetProxyClientCache()
+			}
+			recordManageAudit(c, "channel.status_update", map[string]interface{}{
+				"id":      channel.Id,
+				"status":  channel.Status,
+				"changed": changed,
+			})
+			c.JSON(http.StatusOK, gin.H{
+				"success": true,
+				"message": "",
+				"data":    channel,
+			})
+			return
+		}
 		common.ApiErrorI18n(c, i18n.MsgInvalidParams)
 		return
 	}
@@ -1171,7 +1189,11 @@ func FetchModels(c *gin.Context) {
 		return
 	}
 
-	baseURL := req.BaseURL
+	baseURL := strings.TrimSpace(req.BaseURL)
+	if baseURL != "" && c.GetInt("role") < common.RoleRootUser {
+		common.ApiErrorI18n(c, i18n.MsgAuthInsufficientPrivilege)
+		return
+	}
 	if baseURL == "" {
 		baseURL = constant.ChannelBaseURLs[req.Type]
 	}

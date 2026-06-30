@@ -1,33 +1,19 @@
 package controller
 
-import "github.com/QuantumNous/new-api/model"
+import (
+	"github.com/QuantumNous/new-api/common"
+	"github.com/QuantumNous/new-api/dto"
+	"github.com/QuantumNous/new-api/model"
+)
 
 func channelHasSensitiveChanges(channel *PatchChannel, origin *model.Channel, requestData map[string]any) bool {
-	if _, ok := requestData["type"]; ok && channel.Type != origin.Type {
-		return true
-	}
 	if _, ok := requestData["key"]; ok && channel.Key != "" && channel.Key != origin.Key {
 		return true
 	}
 	if _, ok := requestData["base_url"]; ok && !equalStringPtr(channel.BaseURL, origin.BaseURL) {
 		return true
 	}
-	if _, ok := requestData["openai_organization"]; ok && !equalStringPtr(channel.OpenAIOrganization, origin.OpenAIOrganization) {
-		return true
-	}
-	if _, ok := requestData["header_override"]; ok && !equalStringPtr(channel.HeaderOverride, origin.HeaderOverride) {
-		return true
-	}
-	if _, ok := requestData["param_override"]; ok && !equalStringPtr(channel.ParamOverride, origin.ParamOverride) {
-		return true
-	}
-	if _, ok := requestData["setting"]; ok && !equalStringPtr(channel.Setting, origin.Setting) {
-		return true
-	}
-	if _, ok := requestData["other"]; ok && channel.Other != origin.Other {
-		return true
-	}
-	if _, ok := requestData["settings"]; ok && channel.OtherSettings != origin.OtherSettings {
+	if _, ok := requestData["setting"]; ok && channelHasProxyChange(channel.Setting, origin.Setting) {
 		return true
 	}
 	if _, ok := requestData["key_mode"]; ok && channel.KeyMode != nil {
@@ -61,15 +47,9 @@ func channelHasSensitiveChanges(channel *PatchChannel, origin *model.Channel, re
 // channelHasSensitiveChanges with a precise old-vs-new comparison; this set is
 // used to exclude them from the fail-closed scan for unknown fields.
 var channelSensitiveFields = map[string]struct{}{
-	"type":                {},
 	"key":                 {},
 	"base_url":            {},
-	"openai_organization": {},
-	"header_override":     {},
-	"param_override":      {},
 	"setting":             {},
-	"other":               {},
-	"settings":            {},
 	"key_mode":            {},
 }
 
@@ -88,6 +68,33 @@ var channelReadOnlyFields = map[string]struct{}{
 	"balance":              {},
 	"balance_updated_time": {},
 	"used_quota":           {},
+}
+
+func channelHasProxyChange(nextSetting *string, originSetting *string) bool {
+	next := dto.ChannelSettings{}
+	origin := dto.ChannelSettings{}
+	if nextSetting != nil && *nextSetting != "" {
+		if err := common.Unmarshal([]byte(*nextSetting), &next); err != nil {
+			return true
+		}
+	}
+	if originSetting != nil && *originSetting != "" {
+		if err := common.Unmarshal([]byte(*originSetting), &origin); err != nil {
+			return true
+		}
+	}
+	return next.Proxy != origin.Proxy
+}
+
+func isStatusOnlyChannelUpdate(requestData map[string]any) bool {
+	for field := range requestData {
+		if field != "id" && field != "status" {
+			return false
+		}
+	}
+	_, hasID := requestData["id"]
+	_, hasStatus := requestData["status"]
+	return hasID && hasStatus
 }
 
 func clearChannelReadOnlyFields(channel *PatchChannel, requestData map[string]any) {
@@ -119,6 +126,7 @@ func clearChannelReadOnlyFields(channel *PatchChannel, requestData map[string]an
 // TestChannelFieldsAreClassified guard test enforces this.
 var channelNonSensitiveFields = map[string]struct{}{
 	"id":                  {},
+	"type":                {},
 	"test_model":          {},
 	"name":                {},
 	"weight":              {},
@@ -129,6 +137,11 @@ var channelNonSensitiveFields = map[string]struct{}{
 	"priority":            {},
 	"auto_ban":            {},
 	"other_info":          {},
+	"openai_organization": {},
+	"header_override":     {},
+	"param_override":      {},
+	"other":               {},
+	"settings":            {},
 	"tag":                 {},
 	"remark":              {},
 	"channel_info":        {},
