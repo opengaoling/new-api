@@ -3673,6 +3673,24 @@
     "并确认自行承担部署": "並確認自行承擔部署",
     "运营和收费行为产生的法律责任": "營運和收費行為產生的法律責任",
     "，": "，",
-    "、": "、"
+    "、": "、",
+    "Channel Management": "渠道管理",
+    "Read channels": "查看渠道",
+    "View channel lists and details without secrets.": "查看渠道列表和詳情，不包含金鑰。",
+    "Operate channels": "運維渠道",
+    "Test channels, refresh balances, and perform non-status operational actions.": "測試渠道、刷新餘額，以及執行不改變啟用狀態的運營操作。",
+    "Enable or disable channels": "啟用或停用渠道",
+    "Enable or disable individual, batch, or tagged channels.": "啟用或停用單個渠道、批量渠道或指定標籤的渠道。",
+    "Edit channel routing": "編輯渠道路由",
+    "Edit non-sensitive settings such as models, groups, and routing rules.": "編輯模型、分組、路由規則等非敏感設定。",
+    "Edit sensitive channel settings": "編輯渠道敏感設定",
+    "Create channels or edit keys, base URLs, and overrides.": "建立渠道，或編輯金鑰、Base URL 和覆蓋設定。",
+    "View channel secrets": "查看渠道金鑰",
+    "Reserved for viewing complete channel keys after secure verification.": "用於安全驗證後查看完整渠道金鑰。",
+    "Administrator permissions": "普通管理員權限管理",
+    "Configure the default permissions for ordinary administrators. Super administrators are not affected.": "配置普通管理員預設擁有的權限。超級管理員不受影響。",
+    "Permissions in this group apply to ordinary administrators by default.": "此組權限會預設套用到普通管理員。",
+    "Reset to built-in defaults": "重置為內建預設值",
+    "Save administrator permissions": "儲存普通管理員權限"
   }
 }

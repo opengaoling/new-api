@@ -3826,6 +3826,24 @@
     "并确认自行承担部署": "confirm that I bear legal responsibility arising from deployment",
     "运营和收费行为产生的法律责任": "operation and charging behavior",
     "，": ", ",
-    "、": ", "
+    "、": ", ",
+    "Channel Management": "Channel Management",
+    "Read channels": "Read channels",
+    "View channel lists and details without secrets.": "View channel lists and details without secrets.",
+    "Operate channels": "Operate channels",
+    "Test channels, refresh balances, and perform non-status operational actions.": "Test channels, refresh balances, and perform non-status operational actions.",
+    "Enable or disable channels": "Enable or disable channels",
+    "Enable or disable individual, batch, or tagged channels.": "Enable or disable individual, batch, or tagged channels.",
+    "Edit channel routing": "Edit channel routing",
+    "Edit non-sensitive settings such as models, groups, and routing rules.": "Edit non-sensitive settings such as models, groups, and routing rules.",
+    "Edit sensitive channel settings": "Edit sensitive channel settings",
+    "Create channels or edit keys, base URLs, and overrides.": "Create channels or edit keys, base URLs, and overrides.",
+    "View channel secrets": "View channel secrets",
+    "Reserved for viewing complete channel keys after secure verification.": "Reserved for viewing complete channel keys after secure verification.",
+    "Administrator permissions": "Administrator permissions",
+    "Configure the default permissions for ordinary administrators. Super administrators are not affected.": "Configure the default permissions for ordinary administrators. Super administrators are not affected.",
+    "Permissions in this group apply to ordinary administrators by default.": "Permissions in this group apply to ordinary administrators by default.",
+    "Reset to built-in defaults": "Reset to built-in defaults",
+    "Save administrator permissions": "Save administrator permissions"
   }
 }

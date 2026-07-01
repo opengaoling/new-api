@@ -1950,7 +1950,7 @@
     "footer.columns.related.links.oneApi": "One API",
     "footer.columns.related.title": "Related Projects",
     "footer.defaultCopyright": "All rights reserved.",
-    "footer.new\u0061pi.projectAttributionSuffix": "All rights reserved. Designed and developed by the project contributors.",
+    "footer.newapi.projectAttributionSuffix": "All rights reserved. Designed and developed by the project contributors.",
     "For channels added after May 10, 2025, no need to remove \".\" from model names during deployment": "For channels added after May 10, 2025, no need to remove \".\" from model names during deployment",
     "For private deployments, format: https://fastgpt.run/api/openapi": "For private deployments, format: https://fastgpt.run/api/openapi",
     "Force a syntactically valid JSON response": "Force a syntactically valid JSON response",
@@ -4977,6 +4977,14 @@
     "Zero retention": "Zero retention",
     "Zhipu": "Zhipu",
     "Zhipu V4": "Zhipu V4",
-    "Zoom": "Zoom"
+    "Zoom": "Zoom",
+    "Test channels, refresh balances, and perform non-status operational actions.": "Test channels, refresh balances, and perform non-status operational actions.",
+    "Enable or disable channels": "Enable or disable channels",
+    "Enable or disable individual, batch, or tagged channels.": "Enable or disable individual, batch, or tagged channels.",
+    "Administrator permissions": "Administrator permissions",
+    "Configure the default permissions for ordinary administrators. Super administrators are not affected.": "Configure the default permissions for ordinary administrators. Super administrators are not affected.",
+    "Permissions in this group apply to ordinary administrators by default.": "Permissions in this group apply to ordinary administrators by default.",
+    "Reset to built-in defaults": "Reset to built-in defaults",
+    "Save administrator permissions": "Save administrator permissions"
   }
 }

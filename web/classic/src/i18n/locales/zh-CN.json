@@ -3809,6 +3809,24 @@
     "并确认自行承担部署": "并确认自行承担部署",
     "运营和收费行为产生的法律责任": "运营和收费行为产生的法律责任",
     "，": "，",
-    "、": "、"
+    "、": "、",
+    "Channel Management": "渠道管理",
+    "Read channels": "查看渠道",
+    "View channel lists and details without secrets.": "查看渠道列表和详情，不包含密钥。",
+    "Operate channels": "运维渠道",
+    "Test channels, refresh balances, and perform non-status operational actions.": "测试渠道、刷新余额，以及执行不改变启用状态的运营操作。",
+    "Enable or disable channels": "启用或禁用渠道",
+    "Enable or disable individual, batch, or tagged channels.": "启用或禁用单个渠道、批量渠道或指定标签的渠道。",
+    "Edit channel routing": "编辑渠道路由",
+    "Edit non-sensitive settings such as models, groups, and routing rules.": "编辑模型、分组、路由规则等非敏感设置。",
+    "Edit sensitive channel settings": "编辑渠道敏感设置",
+    "Create channels or edit keys, base URLs, and overrides.": "创建渠道，或编辑密钥、Base URL 和覆盖配置。",
+    "View channel secrets": "查看渠道密钥",
+    "Reserved for viewing complete channel keys after secure verification.": "用于安全验证后查看完整渠道密钥。",
+    "Administrator permissions": "普通管理员权限管理",
+    "Configure the default permissions for ordinary administrators. Super administrators are not affected.": "配置普通管理员默认拥有的权限。超级管理员不受影响。",
+    "Permissions in this group apply to ordinary administrators by default.": "此组权限会默认应用到普通管理员。",
+    "Reset to built-in defaults": "重置为内置默认值",
+    "Save administrator permissions": "保存普通管理员权限"
   }
 }
