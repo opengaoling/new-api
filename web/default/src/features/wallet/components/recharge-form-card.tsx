@@ -533,7 +533,7 @@ export function RechargeFormCard({
         <Alert className='border-t'>
           <AlertDescription>
             {t(
-              'Redemption codes are disabled until the administrator confirms compliance terms.'
+              'Redemption codes are not enabled. Please contact administrator.'
             )}
           </AlertDescription>
         </Alert>
